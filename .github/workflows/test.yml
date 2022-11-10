@@ -1,0 +1,16 @@
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test-abort-on-container-exit:
+    runs-on: ubuntu-latest
+    name: test compose action with --abort-on-container-exit
+    steps:
+      - name: checkout to current branch
+        uses: actions/checkout@v3
+      - name: run docker-compose
+        uses: isbang/compose-action@v1.4.0
+        with:
+          compose-file: "test/docker-compose.yml"
+          up-flags: "--exit-code-from=web --abort-on-container-exit=web"
